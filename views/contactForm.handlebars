@@ -1,0 +1,32 @@
+<h1>Contact Form</h1>
+
+<form action="/saveContact" method="post">
+  <label for="firstName">First Name</label>
+  <input type="text" id="firstName" name="firstName" value="{{contact.firstName}}" />
+  <div class="fieldError">{{errors.firstName.message}}</div>
+  <br />
+
+  <label for="lastName">Last Name</label>
+  <input type="text" id="lastName" name="lastName" value="{{contact.lastName}}" />
+  <div class="fieldError">{{errors.lastName.message}}</div>
+  <br />
+
+  <label for="emailAddress">Email</label>
+  <input type="text" id="emailAddress" name="emailAddress" value="{{contact.emailAddress}}" />
+  <br />
+
+  <label for="homePhone">Home Phone</label>
+  <input type="text" id="homePhone" name="homePhone" value="{{contact.homePhone}}" />
+  <br />
+
+  <label for="mobilePhone">Mobile Phone</label>
+  <input type="text" id="mobilePhone" name="mobilePhone" value="{{contact.mobilePhone}}" />
+  <div class="fieldError">{{errors.mobilePhone.message}}</div>
+  <br />
+
+  {{#if contact._id}}
+    <input type="hidden" name="id" value="{{contact._id}}" />
+  {{/if}}
+
+  <button class="button-primary">Save Contact</button>
+</form>

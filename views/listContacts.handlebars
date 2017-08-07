@@ -1,0 +1,30 @@
+<h1>List Contacts</h1>
+
+
+<table border="1">
+  <tr>
+    <th>
+      Name
+    </th>
+    <th>
+      Email
+    </th>
+    <th>
+      Home
+    </th>
+    <th>
+      Mobile
+    </th>
+    <th></th>
+  </tr>
+  {{#contacts}}
+  <tr>
+    <td><a href="/contactForm?id={{_id}}">{{firstName}} {{lastName}}</a></td>
+    <td>{{emailAddress}}</td>
+    <td>{{homePhone}}</td>
+    <td>{{mobilePhone}}</td>
+    <td><a href="/deleteContact/?id={{_id}}">Delete</a></td>
+  </tr>
+  {{/contacts}}
+
+</table>
