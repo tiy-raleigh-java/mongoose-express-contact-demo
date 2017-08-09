@@ -22,32 +22,48 @@ routes.get('/contactForm', (req, res) => {
 });
 
 routes.post('/saveContact', (req, res) => {
-  Contact.findByIdAndUpdate(req.body.id, req.body, { upsert: true })
-    .then(() => res.redirect('/'))
-    // catch validation errors
-    .catch(err => {
-      console.log(err);
-      res.render('contactForm', {
-        errors: err.errors,
-        contact: req.body
-      });
-    });
-  // if (req.body.id) {
-  //   Contact.findById(req.body.id).
-  // } else {
-  //   new Contact(req.body)
-  //     .save()
-  //     // then redirect to the homepage
-  //     .then(() => res.redirect('/'))
-  //     // catch validation errors
-  //     .catch(err => {
-  //       console.log(err.errors);
-  //       res.render('contactForm', {
-  //         errors: err.errors,
-  //         contact: req.body
-  //       });
+  console.log('body: ', req.body);
+  // note to future people: upsert:true on the command below was causing null ids to be set for new records.
+  // Contact.findByIdAndUpdate(req.body.id, req.body, { upsert: true, setDefaultsOnInsert: true })
+  //   .then(() => res.redirect('/'))
+  //   // catch validation errors
+  //   .catch(err => {
+  //     console.log(err);
+  //     res.render('contactForm', {
+  //       errors: err.errors,
+  //       contact: req.body
   //     });
-  // }
+  //   });
+
+  // check to see if we received an id for a contact
+  if (req.body.id) {
+    // find the contact by id and update it
+    Contact.findByIdAndUpdate(req.body.id, req.body)
+      // redirect to the homepage
+      .then(() => res.redirect('/'))
+      // catch validation errors
+      .catch(err => {
+        console.log(err);
+        res.render('contactForm', {
+          errors: err.errors,
+          contact: req.body
+        });
+      });
+  } else {
+    // this is a new contact
+    new Contact(req.body)
+      .save()
+      // then redirect to the homepage
+      .then(() => res.redirect('/'))
+      // catch validation errors
+      .catch(err => {
+        console.log(err.errors);
+        res.render('contactForm', {
+          errors: err.errors,
+          contact: req.body
+        });
+      });
+  }
 });
 
 routes.get('/deleteContact', (req, res) => {
